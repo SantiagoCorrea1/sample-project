@@ -1,0 +1,80 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <title>Admin page</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>index</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <link rel="stylesheet" th:href="@{/bootstrap/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/VentasPro-Contact-Form.css}">
+</head>
+
+<body>
+<nav class="navbar navbar-light navbar-expand bg-light navigation-clean" style="background: url(/images/sala-cine.jpg);background-size: cover;">
+    <div class="container"><a class="navbar-brand" href="#" style="font-weight: bold;color: rgb(255,255,255);">Movie catalog</a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1"></button>
+        <div class="collapse navbar-collapse text-end" id="navcol-1"><a class="ms-auto" href="logger.html">Log Out</a></div>
+    </div>
+</nav>
+<header class="text-center text-white masthead" style="background: url('/images/sala-cine.jpg')no-repeat center center;background-size: cover;max-height: 200px;">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-9 mx-auto position-relative">
+                <h1 class="mb-5">log in to edit the catalog</h1>
+            </div>
+            <div class="col-md-10 col-lg-8 col-xl-7 mx-auto position-relative">
+                <form class="row g-4 align-items-center" th:action="@{/}">
+                    <div class="col-auto">
+                        <input class="form-control" type="text" placeholder="Filter by name..." name="keyWord" id="keyWord" th:value="${keyWord}" required>
+                    </div>
+                    &nbsp;
+                    <div class="col-auto">
+                        <input class="btn btn-info btn-lg" type="submit" value="Search">
+                    </div>
+                    &nbsp; &nbsp;
+                    <div class="col-auto">
+                        <input class="btn btn-secondary btn-lg" type="submit" value="Clean">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</header>
+<div class="container m-3">
+    <div id="table" style="width: 100%;">
+        <div class="card" id="TableSorterCard">
+            <div class="card-header py-3 d-flex justify-content-end" ><a class="btn btn-primary btn-sm" role="button" style="align-self: center;text-align: center;width: 15%;" th:href="@{admin/add}">Add movie</a></div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="table-responsive" style="border-color: var(--bs-emphasis-color);">
+                        <table class="table table-striped table tablesorter" id="ipi-table" >
+                            <thead class="thead-dark">
+                            <tr>
+                                <th class="text-center">Name</th>
+                                <th class="text-center">pg</th>
+                                <th class="text-center">GENRE</th>
+                                <th class="text-center">status</th>
+                                <th class="text-center">Options</th>
+                            </tr>
+                            </thead>
+                            <tbody class="text-center">
+                            <tr th:each="movie : ${moviesAdmin}">
+                                <td th:text="${movie.name}"></td>
+                                <td th:text="${movie.pg}" style="max-width: 10%;"></td>
+                                <td th:text = "${movie.genre}" style="max-width: 40%;"></td>
+                                <td th:text = "${movie.status}" style="max-width: 25%;"></td>
+                                <td class="text-center filter-false sorter-false"> <a class="btn btn-primary ms-auto" th:href="@{/admin/edit/{id}(id=${movie.id})}" style="margin-right: 12px">Edit</a><a class="btn btn-primary ms-auto" th:href="@{/admin/{id}(id=${movie.id})}" style="margin-left: 12px; background: #bb2d3b; border: #bb2d3b">Delete</a> </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+</html>
